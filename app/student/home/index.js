@@ -34,12 +34,13 @@ const categorys = [
 
 ]
 
-const foods = [
+const Items = [
    {
       id: 1,
       title: 'dosa',
       category: 1,
       price: 40,
+      status: true,
       img: require('../../../assets/img/dosa.webp')
    },
    {
@@ -48,6 +49,7 @@ const foods = [
       title: 'ideli',
       category: 1,
       price: 20,
+      status: true,
       img: require('../../../assets/img/ideli.jpeg')
    },
    {
@@ -56,102 +58,94 @@ const foods = [
       title: 'ven pongal',
       category: 1,
       price: 30,
+      status: true,
       img: require('../../../assets/img/pongal.jpeg')
    },
-]
-
-const drinks = [
    {
-      id: 1,
+      id: 4,
       title: '7up',
       category: 2,
       price: 20,
+      status: true,
       img: require('../../../assets/img/drinks/7up.jpeg')
 
    },
    {
-      id: 2,
+      id: 5,
       title: 'cavins',
       category: 2,
       price: 40,
+      status: true,
       img: require('../../../assets/img/drinks/cavins.jpeg')
 
    },
    {
-      id: 3,
+      id: 6,
       title: 'coca',
       category: 2,
       price: 20,
+      status: true,
       img: require('../../../assets/img/drinks/coca.jpeg')
 
    },
    {
-      id: 4,
+      id: 7,
       title: 'fanta',
       category: 2,
       price: 20,
+      status: true,
       img: require('../../../assets/img/drinks/fanta.jpeg')
 
    },
    {
-      id: 5,
+      id: 8,
       title: 'frooti',
       category: 2,
       price: 20,
+      status: true,
       img: require('../../../assets/img/drinks/frooti.jpeg')
 
    },
    {
-      id: 6,
+      id: 9,
       title: 'pepsi',
       category: 2,
       price: 20,
+      status: true,
       img: require('../../../assets/img/drinks/pepsi.jpeg')
-
    },
-]
-
-const snacks = [
    {
-      id: 1,
+      id: 10,
       title: 'veg puff',
       category: 3,
       price: 15,
+      status: true,
       img: require('../../../assets/img/snacks/vegpuffs.jpeg')
    },
    {
-      id: 2,
+      id: 11,
       title: 'samosa',
       category: 3,
       price: 15,
+      status: true,
       img: require('../../../assets/img/snacks/samosa.jpeg')
    },
-
-
 ]
-
 
 const index = () => {
    const [tab, setTabs] = useState(1)
-   const [topOrders, setTopOrders] = useState(foods)
+   const [topOrders, setTopOrders] = useState(Items.filter(({ category }) => category == 1))
+   const [search, setSearch] = useState('')
 
    const handleCategory = (id) => {
-
       setTabs(id)
-
-      switch (id) {
-         case 1:
-            setTopOrders(foods)
-            break;
-         case 2:
-            setTopOrders(drinks)
-            break;
-         case 3:
-            setTopOrders(snacks)
-            break;
-         default:
-            break;
-      }
+      const data = Items.filter(({ category }) => category == id)
+      setTopOrders(data)
+   }
+   const handleSearch = () => {
+      const result = Items.filter((item) => item.title.includes(search.toLowerCase()))
+      console.log(result);
+      result && setTopOrders(result)
    }
 
    return (
@@ -184,7 +178,6 @@ const index = () => {
 
             }
          />
-
          <View className=' items-center flex pt-5 gap-3' >
 
             <View className=' py-5'>
@@ -192,7 +185,7 @@ const index = () => {
             </View>
             <View className=' flex w-[310px] px-5 items-center flex-row bg-gray-300 rounded-3xl'>
                <Feather name='search' size={21} />
-               <TextInput className='py-2 px-3' placeholder='Search you favourite' />
+               <TextInput onEndEditing={() => handleSearch()} onChangeText={(value) => setSearch(value)} className='py-2 px-3' placeholder='Search you favourite' />
             </View>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} className=' pt-3'  >
                {

@@ -43,7 +43,7 @@ const VendorsRegister = () => {
             </View>
 
             <TouchableOpacity onPress={() => router.push('/vendors/home')} className=' bg-violet-900 px-3 w-full rounded-md py-3 my-7'>
-                <Text className=' text-white text-center  font-bold '>Create A  Vendor</Text>
+                <Text className=' text-white text-center '>Create A  Vendor</Text>
             </TouchableOpacity>
         </ScrollView>
     )

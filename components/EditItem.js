@@ -1,14 +1,12 @@
-import React, { useState } from 'react'
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { useState } from 'react';
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-import { ScrollView } from 'react-native-gesture-handler';
-import uuid from 'react-native-uuid';
 
 
 const category = [
-    { label: 'Foods', value: '1' },
-    { label: 'Drinks', value: '2' },
-    { label: 'Snacks', value: '3' },
+    { label: 'Foods', value: 1 },
+    { label: 'Drinks', value: 2 },
+    { label: 'Snacks', value: 3 },
 
 ];
 
@@ -19,30 +17,31 @@ const Availability = [
 
 ]
 
+const EditItem = ({ editItem, handleUpdateItem }) => {
 
-const AddItem = ({ handleAddItem }) => {
-    const [title, setTitle] = useState('')
-    const [price, setPrice] = useState(null)
-    const [img, setImg] = useState('')
-    const [categoryValue, setCategoryValue] = useState(null);
-    const [availabilityValue, setAvailablityValue] = useState(null)
+
+    const [title, setTitle] = useState(editItem.title)
+    const [price, setPrice] = useState(editItem.price.toString())
+    const [img, setImg] = useState(editItem.img)
+    const [categoryValue, setCategoryValue] = useState(editItem.category);
+    const [availabilityValue, setAvailablityValue] = useState(editItem.status)
     const [isFocus, setIsFocus] = useState(false);
 
-    const handleInput = () => {
-        const newItem = {
-            id: uuid.v4(),
+    const updateItem = () => {
+        const data = {
+            id: editItem.id,
             title,
-            category: categoryValue,
-            img,
             price,
-            status: availabilityValue
+            img,
+            category: categoryValue,
+            status: availabilityValue,
         }
-        Alert.alert('Conformation', 'Are you sure want add this item', [
+        Alert.alert('Conformation', 'Are you sure want to update this item', [
             {
                 text: 'Yes',
-                onPress: () => handleAddItem(newItem)
-
-            }, {
+                onPress: () => handleUpdateItem(data)
+            },
+            {
                 text: 'No',
 
             }
@@ -54,21 +53,20 @@ const AddItem = ({ handleAddItem }) => {
         <ScrollView style={{ width: '100%', marginLeft: 12 }} >
             <View className=' w-full flex flex-col gap-4 px-2 items-center py-7'>
 
-
                 <Text className='  border-b-2 border-blue-500 font-semibold text-lg'>
-                    Add New Item
+                    Update Item
                 </Text>
                 <View className=' w-full'>
                     <Text className=' py-2'>Item Name</Text>
-                    <TextInput onChangeText={(value) => setTitle(value)} className=' border-[1px] border-gray-500 px-3 py-1 rounded-md ' placeholder='Enter Item name' />
+                    <TextInput value={title} onChangeText={(value) => setTitle(value)} className=' border-[1px] border-gray-500 px-3 py-1 rounded-md ' placeholder='Enter Item name' />
                 </View>
                 <View className=' w-full'>
                     <Text className=' py-2'>Price</Text>
-                    <TextInput keyboardType='numeric' onChangeText={(value) => setPrice(value)} className=' border-[1px] border-gray-500 px-3 py-1 rounded-md ' placeholder='Enter email' />
+                    <TextInput value={price} keyboardType='numeric' onChangeText={(value) => setPrice(value)} className=' border-[1px] border-gray-500 px-3 py-1 rounded-md ' placeholder='Enter price' />
                 </View>
                 <View className=' w-full'>
                     <Text className='py-2'>Image  URL</Text>
-                    <TextInput onChangeText={(value) => setImg(value)} focusable className='  border-[1px] border-gray-500 px-3 py-1 rounded-md ' placeholder='Enter img url' />
+                    <TextInput value={img} onChangeText={(value) => setImg(value)} focusable className='  border-[1px] border-gray-500 px-3 py-1 rounded-md ' placeholder='Enter img url' />
                 </View>
 
                 <View className=' w-full'>
@@ -123,9 +121,9 @@ const AddItem = ({ handleAddItem }) => {
                         }}
                     />
                 </View>
-                <TouchableOpacity onPress={() => handleInput()} className=' bg-blue-500 px-3 w-full rounded-md py-2'>
+                <TouchableOpacity onPress={() => updateItem()} className=' bg-blue-500 px-3 w-full rounded-md py-2'>
 
-                    <Text className=' text-white text-center '>Add Item</Text>
+                    <Text className=' text-white text-center '>Update Item</Text>
 
                 </TouchableOpacity>
             </View>
@@ -133,8 +131,7 @@ const AddItem = ({ handleAddItem }) => {
     )
 }
 
-export default AddItem
-
+export default EditItem
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',

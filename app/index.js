@@ -2,6 +2,7 @@ import { Stack, useRouter } from 'expo-router'
 import { View, Text, SafeAreaView, Button, TouchableOpacity, Modal } from 'react-native'
 import { Entypo, EvilIcons } from '@expo/vector-icons';
 import colors from "tailwindcss/colors";
+import { useContext } from 'react';
 
 
 
@@ -18,9 +19,7 @@ const Home = () => {
           },
           title: 'FcApp',
           headerTitleAlign: "left",
-          headerLeft: () => {
-            return <EvilIcons style={{ marginRight: 20, }} name='navicon' size={30} />
-          }
+
         }} />
 
       <View className=' w-full flex flex-col items-center '>
