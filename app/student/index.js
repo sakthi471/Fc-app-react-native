@@ -40,7 +40,6 @@ const index = () => {
 
         </View>
 
-        {/* <Text > Don't have acoount <Text className=' font-bold' >  Register</Text> </Text> */}
       </View>
 
     </View >

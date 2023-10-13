@@ -3,6 +3,7 @@ import { Image, ScrollView, Text, TextInput, View } from 'react-native'
 import { EvilIcons, Feather, AntDesign } from '@expo/vector-icons'
 import { useState } from 'react';
 import Vendors from '../../../components/Vendors';
+import TopOrders from '../../../components/TopOrders';
 
 const categorys = [
    {
@@ -59,8 +60,100 @@ const foods = [
    },
 ]
 
+const drinks = [
+   {
+      id: 1,
+      title: '7up',
+      category: 2,
+      price: 20,
+      img: require('../../../assets/img/drinks/7up.jpeg')
+
+   },
+   {
+      id: 2,
+      title: 'cavins',
+      category: 2,
+      price: 40,
+      img: require('../../../assets/img/drinks/cavins.jpeg')
+
+   },
+   {
+      id: 3,
+      title: 'coca',
+      category: 2,
+      price: 20,
+      img: require('../../../assets/img/drinks/coca.jpeg')
+
+   },
+   {
+      id: 4,
+      title: 'fanta',
+      category: 2,
+      price: 20,
+      img: require('../../../assets/img/drinks/fanta.jpeg')
+
+   },
+   {
+      id: 5,
+      title: 'frooti',
+      category: 2,
+      price: 20,
+      img: require('../../../assets/img/drinks/frooti.jpeg')
+
+   },
+   {
+      id: 6,
+      title: 'pepsi',
+      category: 2,
+      price: 20,
+      img: require('../../../assets/img/drinks/pepsi.jpeg')
+
+   },
+]
+
+const snacks = [
+   {
+      id: 1,
+      title: 'veg puff',
+      category: 3,
+      price: 15,
+      img: require('../../../assets/img/snacks/vegpuffs.jpeg')
+   },
+   {
+      id: 2,
+      title: 'samosa',
+      category: 3,
+      price: 15,
+      img: require('../../../assets/img/snacks/samosa.jpeg')
+   },
+
+
+]
+
+
 const index = () => {
    const [tab, setTabs] = useState(1)
+   const [topOrders, setTopOrders] = useState(foods)
+
+   const handleCategory = (id) => {
+
+      setTabs(id)
+
+      switch (id) {
+         case 1:
+            setTopOrders(foods)
+            break;
+         case 2:
+            setTopOrders(drinks)
+            break;
+         case 3:
+            setTopOrders(snacks)
+            break;
+         default:
+            break;
+      }
+   }
+
    return (
       <ScrollView className=' w-full px-5 '>
          <Stack.Screen
@@ -91,6 +184,7 @@ const index = () => {
 
             }
          />
+
          <View className=' items-center flex pt-5 gap-3' >
 
             <View className=' py-5'>
@@ -103,33 +197,12 @@ const index = () => {
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} className=' pt-3'  >
                {
                   categorys.map(({ id, title }) => {
-                     return <Text onPress={() => setTabs(id)} className={`  rounded-xl duration-500 capitalize  px-4 text-base  border-blue-500  ${id === tab ? 'border-[2px] text-white bg-blue-500' : ''}`} key={id} > {title} </Text>
+                     return <Text onPress={() => handleCategory(id)} className={`  rounded-xl duration-500 capitalize  px-4 text-base  border-blue-500  ${id === tab ? 'border-[2px] text-white bg-blue-500' : ''}`} key={id} > {title} </Text>
                   })
                }
             </ScrollView>
 
-
-            <View className=' w-full'>
-               <Text className=' pl-4  py-1 font-semibold   text-lg'>
-                  Top order's
-               </Text>
-               <ScrollView horizontal={true} className=' py-3 flex gap-4'>
-                  {
-                     foods.map(({ id, title, img, price }) => {
-                        return (
-                           <View key={id} className=' w-[150px] h-[200px] flex justify-center flex-col items-center bg-white rounded-lg' >
-                              <Image className=' w-[100px] h-[100px] rounded-full' source={img} />
-                              <Text className=' font-bold text-lg'>
-                                 {title}
-                              </Text>
-                              <Text> Rs {price}</Text>
-                           </View>
-                        )
-                     })
-                  }
-               </ScrollView>
-            </View>
-
+            <TopOrders topOrdersData={topOrders} />
             <Vendors />
 
          </View>
