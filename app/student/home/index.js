@@ -1,9 +1,11 @@
 import { Stack } from 'expo-router'
-import { Image, ScrollView, Text, TextInput, View } from 'react-native'
+import { Image, Modal, ScrollView, Text, TextInput, View } from 'react-native'
 import { EvilIcons, Feather, AntDesign } from '@expo/vector-icons'
-import { useState } from 'react';
+import { useImperativeHandle, useState } from 'react';
 import Vendors from '../../../components/Vendors';
 import TopOrders from '../../../components/TopOrders';
+import Search from '../../../components/Search';
+import { useItems } from '../../_layout';
 
 const categorys = [
    {
@@ -41,7 +43,7 @@ const Items = [
       category: 1,
       price: 40,
       status: true,
-      img: require('../../../assets/img/dosa.webp')
+      img: require('../../../assets/img/foods/dosa.webp')
    },
    {
 
@@ -50,7 +52,7 @@ const Items = [
       category: 1,
       price: 20,
       status: true,
-      img: require('../../../assets/img/ideli.jpeg')
+      img: require('../../../assets/img/foods/ideli.jpeg')
    },
    {
 
@@ -58,8 +60,8 @@ const Items = [
       title: 'ven pongal',
       category: 1,
       price: 30,
-      status: true,
-      img: require('../../../assets/img/pongal.jpeg')
+      status: false,
+      img: require('../../../assets/img/foods/pongal.jpeg')
    },
    {
       id: 4,
@@ -84,7 +86,7 @@ const Items = [
       title: 'coca',
       category: 2,
       price: 20,
-      status: true,
+      status: false,
       img: require('../../../assets/img/drinks/coca.jpeg')
 
    },
@@ -119,7 +121,7 @@ const Items = [
       title: 'veg puff',
       category: 3,
       price: 15,
-      status: true,
+      status: false,
       img: require('../../../assets/img/snacks/vegpuffs.jpeg')
    },
    {
@@ -135,19 +137,13 @@ const Items = [
 const index = () => {
    const [tab, setTabs] = useState(1)
    const [topOrders, setTopOrders] = useState(Items.filter(({ category }) => category == 1))
-   const [search, setSearch] = useState('')
+   const { cartState, dispatch, } = useItems()
 
    const handleCategory = (id) => {
       setTabs(id)
       const data = Items.filter(({ category }) => category == id)
       setTopOrders(data)
    }
-   const handleSearch = () => {
-      const result = Items.filter((item) => item.title.includes(search.toLowerCase()))
-      console.log(result);
-      result && setTopOrders(result)
-   }
-
    return (
       <ScrollView className=' w-full px-5 '>
          <Stack.Screen
@@ -163,7 +159,18 @@ const index = () => {
                   headerRight: () => {
                      return (
                         <>
-                           <AntDesign name='shoppingcart' size={24} color='rgb(156 163 175)' style={{ marginRight: 20 }} />
+                           <View>
+                              <AntDesign name='shoppingcart' size={24} color='rgb(156 163 175)' style={{ marginRight: 20 }} />
+                              {
+                                 cartState.length > 0 ? (
+                                    <View className=' top-[-5px] right-[12px] absolute flex items-center justify-center bg-red-500 w-[15px] h-[15px] rounded-full '>
+                                       <Text className='  text-xs text-center text-white font-bold '>
+                                          {cartState.length}
+                                       </Text>
+                                    </View>
+                                 ) : (null)
+                              }
+                           </View>
                            <View className=' flex items-center justify-center rounded-full w-8 h-8 bg-blue-500 ' >
 
                               <Text className=' text-white font-bold '>
@@ -181,12 +188,10 @@ const index = () => {
          <View className=' items-center flex pt-5 gap-3' >
 
             <View className=' py-5'>
-               <Text className=' text-2xl font-bold ' >Delicious Food  for you </Text>
+               <Text className=' text-2xl font-bold ' >Delicious Food  for you  </Text>
             </View>
-            <View className=' flex w-[310px] px-5 items-center flex-row bg-gray-300 rounded-3xl'>
-               <Feather name='search' size={21} />
-               <TextInput onEndEditing={() => handleSearch()} onChangeText={(value) => setSearch(value)} className='py-2 px-3' placeholder='Search you favourite' />
-            </View>
+
+            <Search Items={Items} resutlsItems={setTopOrders} />
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} className=' pt-3'  >
                {
                   categorys.map(({ id, title }) => {

@@ -1,13 +1,15 @@
 import { Stack, router } from 'expo-router'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import Login from '../../components/Login'
 import SingUp from '../../components/SingUp'
+import { AppContext } from '../../context/Context'
 
 
 const index = () => {
 
   const [accessOption, setAccessOption] = useState('login')
+
 
   return (
     <View className=" w-full flex flex-1 px-7  flex-col items-center pt-10">

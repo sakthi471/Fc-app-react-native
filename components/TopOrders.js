@@ -1,20 +1,28 @@
 import { useEffect, useState } from "react"
-import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native"
+import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Fontisto, MaterialCommunityIcons } from '@expo/vector-icons'
+import { useRouter } from "expo-router"
 
 
 const TopOrders = ({ topOrdersData }) => {
-
+    const router = useRouter()
     const [loading, setLoading] = useState(true)
 
-    const TopOrders = topOrdersData.map(({ id, title, img, price }) => {
+    const TopOrders = topOrdersData.map(({ id, title, img, price, status }) => {
         return (
-            <View key={id} className=' w-[150px] h-[200px] flex justify-center flex-col items-center bg-white rounded-lg' >
+            <TouchableOpacity onPress={() => router.push(`/student/home/${id}`)} key={id} className=' w-[150px] h-[200px] flex justify-center flex-col items-center bg-white rounded-lg' >
                 <Image className=' rounded-md bg-contain w-[100px] h-[100px] ' resizeMode="contain" source={img} />
                 <Text className=' font-bold capitalize text-lg'>
                     {title}
                 </Text>
-                <Text > Rs {price}</Text>
-            </View>
+                <Text > Rs: {price}</Text>
+                <View className=' w-full flex flex-row justify-end items-center px-3 py-1'>
+
+                    {status ? (<MaterialCommunityIcons color='green' name="check-circle-outline" size={20} />)
+                        : (<Fontisto name="ban" color='red' size={15} />)
+                    }
+                </View>
+            </TouchableOpacity>
         )
     })
 
@@ -22,7 +30,7 @@ const TopOrders = ({ topOrdersData }) => {
         setLoading(true)
         setTimeout(() => {
             setLoading(false)
-        }, 1000);
+        },);
 
     }, [topOrdersData])
 

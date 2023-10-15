@@ -1,6 +1,7 @@
 import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { Feather, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import { useState } from 'react';
+import Search from './Search';
 
 
 
@@ -39,7 +40,13 @@ const VendorsMenuItems = ({ menuItems, handleDeleteItem, setTab, handleEditItem 
                     menuItems.map(({ id, title, price, img, status }) => {
                         return (
                             <View key={id} className=' w-[160px]  flex pt-3 flex-col items-center bg-white rounded-lg' >
-                                <Image className='   rounded-lg bg-contain w-[130px] h-[100px] ' resizeMode="contain" source={{ uri: img }} />
+                                {
+                                    typeof (img) == 'number' ? (
+                                        <Image className='rounded-lg bg-contain w-[130px] h-[100px] ' resizeMode="contain" source={img} />
+                                    ) : (
+                                        <Image className='rounded-lg bg-contain w-[130px] h-[100px] ' resizeMode="contain" source={{ uri: img }} />
+                                    )
+                                }
                                 <View className=' flex w-full  items-center flex-col  py-1'>
                                     <Text className='  font-medium py-1 capitalize text-base'>
                                         {title}

@@ -18,7 +18,7 @@ const Login = () => {
                 <TextInput focusable className='  border-[1px] border-gray-500 px-3 py-1 rounded-md ' placeholder='Enter email' />
             </View>
 
-            <TouchableOpacity className=' bg-slate-900 px-3 w-full rounded-md py-3'>
+            <TouchableOpacity onPress={() => router.push('/student/home')} className=' bg-slate-900 px-3 w-full rounded-md py-3'>
                 <Text className=' text-white text-center '>Login</Text>
             </TouchableOpacity>
 

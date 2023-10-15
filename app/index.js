@@ -1,13 +1,9 @@
 import { Stack, useRouter } from 'expo-router'
-import { View, Text, SafeAreaView, Button, TouchableOpacity, Modal } from 'react-native'
-import { Entypo, EvilIcons } from '@expo/vector-icons';
-import colors from "tailwindcss/colors";
-import { useContext } from 'react';
+import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
 
 
 
 const Home = () => {
-
   const router = useRouter()
   return (
     <SafeAreaView className=' flex-1  w-full flex flex-col justify-center items-center  bg-[#F2F2F2]'  >
@@ -21,7 +17,6 @@ const Home = () => {
           headerTitleAlign: "left",
 
         }} />
-
       <View className=' w-full flex flex-col items-center '>
         <View className=' w-[80%]  gap-7'>
           <Text className=' text-xl text-center text-gray-500 '> Start  with  as </Text>
