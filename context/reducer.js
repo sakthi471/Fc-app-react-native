@@ -13,4 +13,6 @@
 //     }
 // }
 
-// export const [cartState, dispatch] = useReducer(reducer, initialState)
+// const [cartState, dispatch] = useReducer(reducer, initialState)
+
+// exports.module = { cartState, dispatch }

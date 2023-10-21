@@ -1,12 +1,13 @@
 
 import { Stack } from 'expo-router';
-import React, { createContext, useContext, useReducer, useState } from 'react'
+import React, { createContext, useContext, useReducer } from 'react'
+
 
 
 export const AppContext = createContext()
 
 
-const initialState = [];
+const initialState = []
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -17,6 +18,7 @@ const reducer = (state, action) => {
       break;
   }
 }
+
 
 const Layout = () => {
 

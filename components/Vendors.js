@@ -31,7 +31,7 @@ const vendors = [
 
 const Vendors = () => {
     return (
-        <ScrollView className=" w-full flex pb-10" >
+        <ScrollView className=" w-full flex pb-10 pl-3" >
             <Text className=' font-semibold pl-4  text-lg py-3 '> Vendors </Text>
 
             <View className='flex w-full flex-col  gap-4 '>
