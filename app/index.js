@@ -1,10 +1,16 @@
 import { Stack, useRouter } from 'expo-router'
 import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
+import { appContext } from './_layout'
+import { ACTIONS } from '../context/reducer'
+import { Button } from 'react-native'
 
 
 
 const Home = () => {
   const router = useRouter()
+
+
+
   return (
     <SafeAreaView className=' flex-1  w-full flex flex-col justify-center items-center  bg-[#F2F2F2]'  >
       <Stack.Screen

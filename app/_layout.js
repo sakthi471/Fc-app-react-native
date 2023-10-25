@@ -1,33 +1,26 @@
 
 import { Stack } from 'expo-router';
 import React, { createContext, useContext, useReducer } from 'react'
+import { initialState, reducer } from '../context/reducer';
+import ContextProvider from '../context/Context';
 
 
 
 export const AppContext = createContext()
 
 
-const initialState = []
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'ADD_TO_CART':
-      return [...state, action.payload]
-      break;
-    default:
-      break;
-  }
-}
 
 
 const Layout = () => {
 
-  const [cartState, dispatch] = useReducer(reducer, initialState)
+  const [globalState, dispatch] = useReducer(reducer, initialState)
 
   return (
-    <AppContext.Provider value={{ cartState, dispatch }}>
+    <AppContext.Provider value={{ globalState, dispatch }}>
       <Stack />
     </AppContext.Provider>
+
 
   )
 }
@@ -35,6 +28,6 @@ const Layout = () => {
 
 export default Layout
 
-export const useItems = () => {
+export const appContext = () => {
   return useContext(AppContext)
 } 

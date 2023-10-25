@@ -2,31 +2,35 @@ import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-na
 import { Feather, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import { useState } from 'react';
 import Search from './Search';
+import { appContext } from '../app/_layout';
+import { ACTIONS } from '../context/reducer';
 
 
 
-const VendorsMenuItems = ({ menuItems, handleDeleteItem, setTab, handleEditItem }) => {
+const VendorsMenuItems = ({ menuItems, setTab, handleEditItem }) => {
 
+    const { globalState, dispatch } = appContext()
 
     const deleteAlertAlert = (id) => {
         Alert.alert('Conformation', 'Are you sure want delete this items', [
             {
                 text: 'Yes',
-                onPress: () => handleDeleteItem(id)
-
+                onPress: () => dispatch({ type: ACTIONS.DELETE_FROM_PRODUCT, payload: { id } })
             },
             {
                 text: 'No',
-
             }
         ])
     }
+
+
+
+
 
     const updateItem = (id) => {
         setTab(3)
         id && handleEditItem(id)
     }
-
 
     return (
 
@@ -37,7 +41,7 @@ const VendorsMenuItems = ({ menuItems, handleDeleteItem, setTab, handleEditItem 
             </Text>
             <View className=' flex flex-wrap flex-row gap-3  mb-20 '>
                 {
-                    menuItems.map(({ id, title, price, img, status }) => {
+                    globalState.products.map(({ id, title, price, img, status }) => {
                         return (
                             <View key={id} className=' w-[160px]  flex pt-3 flex-col items-center bg-white rounded-lg' >
                                 {

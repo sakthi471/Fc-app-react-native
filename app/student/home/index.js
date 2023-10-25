@@ -5,7 +5,7 @@ import { useImperativeHandle, useState } from 'react';
 import Vendors from '../../../components/Vendors';
 import TopOrders from '../../../components/TopOrders';
 import Search from '../../../components/Search';
-import { useItems } from '../../_layout';
+import { appContext } from '../../_layout';
 
 const categorys = [
    {
@@ -137,7 +137,12 @@ const Items = [
 const index = () => {
    const [tab, setTabs] = useState(1)
    const [topOrders, setTopOrders] = useState(Items.filter(({ category }) => category == 1))
-   const { cartState } = useItems()
+   // const { globalState } = appContext()
+   const globalState = [
+      {},
+      {},
+      {},
+   ]
    const [nav, setNav] = useState(false)
 
 
@@ -148,7 +153,7 @@ const index = () => {
    }
 
    const handleCartRouter = () => {
-      if (cartState?.length > 0) {
+      if (globalState?.length > 0) {
          router.push('student/home/cart')
       }
       else {
@@ -182,10 +187,10 @@ const index = () => {
                            <View>
                               <AntDesign onPress={() => handleCartRouter()} name='shoppingcart' size={24} color='rgb(156 163 175)' style={{ marginRight: 20 }} />
                               {
-                                 cartState?.length > 0 ? (
+                                 globalState?.length > 0 ? (
                                     <View className=' top-[-5px] right-[12px] absolute flex items-center justify-center bg-red-500 w-[15px] h-[15px] rounded-full '>
                                        <Text className='  text-xs text-center text-white font-bold '>
-                                          {cartState?.length}
+                                          {globalState?.length}
                                        </Text>
                                     </View>
                                  ) : (null)

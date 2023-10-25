@@ -1,17 +1,26 @@
-// import React, { createContext, useContext, useState } from 'react'
+// import React, { createContext, useContext, useReducer, useState } from 'react'
+// import { initialState, reducer } from './reducer'
 
 
 // export const AppContext = createContext()
 
-// const Context = ({ childern }) => {
-//     const [count, setCount] = useState(0)
+// const ContextProvider = ({ childern }) => {
+//     const [globalState, dispatch] = useReducer(reducer, initialState)
+
+
 //     return (
-//         < AppContext.Provider value={count} >
+//         < AppContext.Provider value={{ globalState, dispatch }} >
 //             {childern}
 //         </AppContext.Provider>
 //     )
 // }
 
 
-// export default Contexta
+
+// export default ContextProvider
+
+
+// export const appContext = () => {
+//     return useContext(AppContext)
+// }
 

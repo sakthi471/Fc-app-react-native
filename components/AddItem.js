@@ -3,6 +3,8 @@ import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'reac
 import { Dropdown } from 'react-native-element-dropdown';
 import { ScrollView } from 'react-native-gesture-handler';
 import uuid from 'react-native-uuid';
+import { appContext } from '../app/_layout';
+import { ACTIONS } from '../context/reducer';
 
 
 const category = [
@@ -20,13 +22,15 @@ const Availability = [
 ]
 
 
-const AddItem = ({ handleAddItem }) => {
+
+const AddItem = ({ setTab }) => {
     const [title, setTitle] = useState('')
     const [price, setPrice] = useState(null)
     const [img, setImg] = useState('')
     const [categoryValue, setCategoryValue] = useState(null);
     const [availabilityValue, setAvailablityValue] = useState(null)
     const [isFocus, setIsFocus] = useState(false);
+    const { dispatch } = appContext()
 
     const handleInput = () => {
         const newItem = {
@@ -40,8 +44,11 @@ const AddItem = ({ handleAddItem }) => {
         Alert.alert('Conformation', 'Are you sure want add this item', [
             {
                 text: 'Yes',
-                onPress: () => handleAddItem(newItem)
+                onPress: () => {
+                    dispatch({ type: ACTIONS.ADD_TO_PRODUCT, payload: newItem })
+                    setTab(1)
 
+                }
             }, {
                 text: 'No',
 

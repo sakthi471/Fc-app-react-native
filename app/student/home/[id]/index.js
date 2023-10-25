@@ -2,7 +2,7 @@ import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useState } from 'react'
 import { Alert, Button, Image, Text, TouchableOpacity, View } from 'react-native'
 import { MaterialIcons, MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
-import { useItems } from '../../../_layout';
+import { appContext } from '../../../_layout';
 
 
 const Items = [
@@ -120,7 +120,7 @@ const category = [
 
 const index = () => {
     const router = useRouter()
-    const { cartState, dispatch } = useItems()
+    const { globalState, dispatch } = appContext()
     const param = useLocalSearchParams()
     const { id } = param
     const itemDetail = Items.find((item) => item.id == id)
@@ -134,8 +134,8 @@ const index = () => {
                 onPress: () => {
 
                     itemDetail &&
-                        dispatch({ type: 'ADD_TO_CART', payload: itemDetail })
-                    router.back()
+                        // dispatch({ type: 'ADD_TO_CART', payload: itemDetail })
+                        router.back()
 
                 }
             },

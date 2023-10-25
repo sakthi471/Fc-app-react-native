@@ -87,30 +87,18 @@ const index = () => {
     const [editItem, setEditItem] = useState()
     const [searchOption, setSearchOption] = useState(false)
 
-    const handleAddItem = (item) => {
-        console.log(item);
-        if (item) {
-            setMenuItems([...menuItems, item])
-        }
-        setTab(1)
 
-    }
-    const handleDeleteItem = (id) => {
-
-        const newState = menuItems.filter((item) => item.id != id)
-        setMenuItems(newState)
-    }
     const handleEditItem = (id) => {
         const Item = menuItems.find((item) => item.id == id)
         setEditItem(Item)
     }
+
     const handleUpdateItem = (data) => {
 
         const items = menuItems.filter((item) => item.id !== data.id)
         setMenuItems([...items, data])
         setTab(1)
     }
-
 
 
     return (
@@ -163,7 +151,7 @@ const index = () => {
                 searchOption && (<Search Items={menuItems} resutlsItems={setMenuItems} />)
             }
             {
-                tab == 1 ? (<VendorsMenuItems handleEditItem={handleEditItem} menuItems={menuItems} setTab={setTab} handleDeleteItem={handleDeleteItem} />) : tab == 2 ? (<AddItem handleAddItem={handleAddItem} />) : (<EditItem handleUpdateItem={handleUpdateItem} editItem={editItem} />)
+                tab == 1 ? (<VendorsMenuItems handleEditItem={handleEditItem} menuItems={menuItems} setTab={setTab} />) : tab == 2 ? (<AddItem setTab={setTab} />) : (<EditItem handleUpdateItem={handleUpdateItem} editItem={editItem} />)
             }
         </View>
     )
