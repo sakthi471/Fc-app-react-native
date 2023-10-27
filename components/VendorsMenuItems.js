@@ -9,7 +9,7 @@ import { ACTIONS } from '../context/reducer';
 
 const VendorsMenuItems = ({ menuItems, setTab, handleEditItem }) => {
 
-    const { globalState, dispatch } = appContext()
+    const { dispatch } = appContext()
 
     const deleteAlertAlert = (id) => {
         Alert.alert('Conformation', 'Are you sure want delete this items', [
@@ -32,16 +32,17 @@ const VendorsMenuItems = ({ menuItems, setTab, handleEditItem }) => {
         id && handleEditItem(id)
     }
 
+
     return (
 
 
         <ScrollView >
-            <Text className=' font-bold text-lg py-3 '>
+            <Text className=' font-bold text-lg py-3 ml-6 '>
                 Menu Items
             </Text>
-            <View className=' flex flex-wrap flex-row gap-3  mb-20 '>
+            <View className=' flex flex-wrap flex-row gap-3  justify-center mb-36 '>
                 {
-                    globalState.products.map(({ id, title, price, img, status }) => {
+                    menuItems.map(({ id, title, price, img, status }) => {
                         return (
                             <View key={id} className=' w-[160px]  flex pt-3 flex-col items-center bg-white rounded-lg' >
                                 {

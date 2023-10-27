@@ -1,104 +1,38 @@
 import { Stack } from 'expo-router'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import AddItem from '../../../components/AddItem'
 import VendorsMenuItems from '../../../components/VendorsMenuItems'
 import EditItem from '../../../components/EditItem'
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import Search from '../../../components/Search'
+import { appContext } from '../../_layout'
 
 
 
 
 const index = () => {
 
-    const [menuItems, setMenuItems] = useState([
-        {
-            id: 1,
-            title: 'dosa',
-            category: 1,
-            img: 'https://www.awesomecuisine.com/wp-content/uploads/2009/06/Plain-Dosa.jpg.webp',
-            price: 40,
-            status: true,
-        },
-        {
-            id: 2,
-            title: 'poori',
-            category: 1,
-            img: 'https://ministryofcurry.com/wp-content/uploads/2020/03/puri-7.jpg',
-            price: 30,
-            status: false,
+    const [menuItems, setMenuItems] = useState([])
 
-        },
-        {
-            id: 6,
-            title: 'coca',
-            category: 2,
-            price: 20,
-            status: false,
-            img: require('../../../assets/img/drinks/coca.jpeg')
-
-        },
-        {
-            id: 7,
-            title: 'fanta',
-            category: 2,
-            price: 20,
-            status: true,
-            img: require('../../../assets/img/drinks/fanta.jpeg')
-
-        },
-        {
-            id: 8,
-            title: 'frooti',
-            category: 2,
-            price: 20,
-            status: true,
-            img: require('../../../assets/img/drinks/frooti.jpeg')
-
-        },
-        {
-            id: 9,
-            title: 'pepsi',
-            category: 2,
-            price: 20,
-            status: true,
-            img: require('../../../assets/img/drinks/pepsi.jpeg')
-        },
-        {
-            id: 10,
-            title: 'veg puff',
-            category: 3,
-            price: 15,
-            status: false,
-            img: require('../../../assets/img/snacks/vegpuffs.jpeg')
-        },
-        {
-            id: 11,
-            title: 'samosa',
-            category: 3,
-            price: 15,
-            status: true,
-            img: require('../../../assets/img/snacks/samosa.jpeg')
-        },
-
-    ])
+    const { globalState } = appContext()
     const [tab, setTab] = useState(1)
     const [editItem, setEditItem] = useState()
     const [searchOption, setSearchOption] = useState(false)
 
 
     const handleEditItem = (id) => {
-        const Item = menuItems.find((item) => item.id == id)
+        const Item = globalState.products.find((item) => item.id == id)
         setEditItem(Item)
     }
+    useEffect(() => {
 
-    const handleUpdateItem = (data) => {
+        const handleSearch = () => {
+            setMenuItems(globalState.products)
+        }
 
-        const items = menuItems.filter((item) => item.id !== data.id)
-        setMenuItems([...items, data])
-        setTab(1)
-    }
+        handleSearch()
+    }, [globalState])
 
 
     return (
@@ -138,8 +72,9 @@ const index = () => {
                     </TouchableOpacity>
                 </View>
 
-                <View className=' flex flex-row items-center' >
-                    <TouchableOpacity onPress={() => setSearchOption(!searchOption)} className='  bg-violet-500 rounded-md py-2 px-4' >
+
+                <View className=' flex flex-row items-center  ' >
+                    <TouchableOpacity onPress={() => setSearchOption(!searchOption)} className='  bg-violet-500 rounded-md  mt-2 py-2 px-4' >
                         {
                             searchOption ? (<Ionicons name='close' color='white' size={15} />) : (<FontAwesome name='search' color='white' size={15} />)
                         }
@@ -148,10 +83,10 @@ const index = () => {
 
             </View>
             {
-                searchOption && (<Search Items={menuItems} resutlsItems={setMenuItems} />)
+                searchOption && (<Search Items={globalState.products} resutlsItems={setMenuItems} />)
             }
             {
-                tab == 1 ? (<VendorsMenuItems handleEditItem={handleEditItem} menuItems={menuItems} setTab={setTab} />) : tab == 2 ? (<AddItem setTab={setTab} />) : (<EditItem handleUpdateItem={handleUpdateItem} editItem={editItem} />)
+                tab == 1 ? (<VendorsMenuItems handleEditItem={handleEditItem} menuItems={menuItems} setTab={setTab} />) : tab == 2 ? (<AddItem setTab={setTab} />) : (<EditItem setTab={setTab} editItem={editItem} />)
             }
         </View>
     )

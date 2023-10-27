@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { appContext } from '../app/_layout';
+import { ACTIONS } from '../context/reducer';
 
 
 const category = [
@@ -17,7 +19,7 @@ const Availability = [
 
 ]
 
-const EditItem = ({ editItem, handleUpdateItem }) => {
+const EditItem = ({ editItem, setTab }) => {
 
 
     const [title, setTitle] = useState(editItem.title)
@@ -26,6 +28,8 @@ const EditItem = ({ editItem, handleUpdateItem }) => {
     const [categoryValue, setCategoryValue] = useState(editItem.category);
     const [availabilityValue, setAvailablityValue] = useState(editItem.status)
     const [isFocus, setIsFocus] = useState(false);
+
+    const { globalState, dispatch } = appContext()
 
     const updateItem = () => {
         const data = {
@@ -39,7 +43,13 @@ const EditItem = ({ editItem, handleUpdateItem }) => {
         Alert.alert('Conformation', 'Are you sure want to update this item', [
             {
                 text: 'Yes',
-                onPress: () => handleUpdateItem(data)
+                onPress: () => {
+                    dispatch({
+                        type: ACTIONS.UPDATE_FROM_PRODUCT,
+                        payload: data
+                    })
+                    setTab(1)
+                }
             },
             {
                 text: 'No',

@@ -12,8 +12,13 @@ const index = () => {
             <Stack.Screen
                 options={
                     {
-                        title: 'FcApp'
+                        title: 'FcApp',
+                        headerShadowVisible: false,
+                        headerStyle: {
+                            backgroundColor: '#F2F2F2'
+                        },
                     }
+
                 }
             />
             <View className='flex  flex-row gap-4 py-5'>

@@ -16,6 +16,10 @@ const index = () => {
       <Stack.Screen
         options={
           {
+            headerStyle: {
+              backgroundColor: '#F2F2F2'
+            },
+            headerShadowVisible: false,
             headerTitle: 'FcApp',
           }
         }

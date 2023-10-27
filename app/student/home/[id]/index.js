@@ -3,105 +3,10 @@ import React, { useState } from 'react'
 import { Alert, Button, Image, Text, TouchableOpacity, View } from 'react-native'
 import { MaterialIcons, MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
 import { appContext } from '../../../_layout';
+import { ACTIONS } from '../../../../context/reducer';
 
 
-const Items = [
-    {
-        id: 1,
-        title: 'dosa',
-        category: 1,
-        price: 40,
-        status: true,
-        img: require('../../../../assets/img/foods/dosa.webp')
-    },
-    {
 
-        id: 2,
-        title: 'ideli',
-        category: 1,
-        price: 20,
-        status: true,
-        img: require('../../../../assets/img/foods/ideli.jpeg')
-    },
-    {
-
-        id: 3,
-        title: 'ven pongal',
-        category: 1,
-        price: 30,
-        status: false,
-        img: require('../../../../assets/img/foods/pongal.jpeg')
-    },
-    {
-        id: 4,
-        title: '7up',
-        category: 2,
-        price: 20,
-        status: true,
-        img: require('../../../../assets/img/drinks/7up.jpeg')
-
-    },
-    {
-        id: 5,
-        title: 'cavins',
-        category: 2,
-        price: 40,
-        status: true,
-        img: require('../../../../assets/img/drinks/cavins.jpeg')
-
-    },
-    {
-        id: 6,
-        title: 'coca',
-        category: 2,
-        price: 20,
-        status: false,
-        img: require('../../../../assets/img/drinks/coca.jpeg')
-
-    },
-    {
-        id: 7,
-        title: 'fanta',
-        category: 2,
-        price: 20,
-        status: true,
-        img: require('../../../../assets/img/drinks/fanta.jpeg')
-
-    },
-    {
-        id: 8,
-        title: 'frooti',
-        category: 2,
-        price: 20,
-        status: true,
-        img: require('../../../../assets/img/drinks/frooti.jpeg')
-
-    },
-    {
-        id: 9,
-        title: 'pepsi',
-        category: 2,
-        price: 20,
-        status: true,
-        img: require('../../../../assets/img/drinks/pepsi.jpeg')
-    },
-    {
-        id: 10,
-        title: 'veg puff',
-        category: 3,
-        price: 15,
-        status: false,
-        img: require('../../../../assets/img/snacks/vegpuffs.jpeg')
-    },
-    {
-        id: 11,
-        title: 'samosa',
-        category: 3,
-        price: 15,
-        status: true,
-        img: require('../../../../assets/img/snacks/samosa.jpeg')
-    },
-]
 
 const category = [
     {
@@ -123,9 +28,9 @@ const index = () => {
     const { globalState, dispatch } = appContext()
     const param = useLocalSearchParams()
     const { id } = param
-    const itemDetail = Items.find((item) => item.id == id)
+    const itemDetail = globalState.products.find((item) => item.id == id)
     const [fav, setFav] = useState(false)
-    const { title } = category.find(({ id }) => id === itemDetail.category)
+    const { title } = category?.find(({ id }) => id === itemDetail.category)
     const [quantity, setQunatity] = useState(1)
     const addToCartAlert = () => {
         Alert.alert('Conformation', 'Are you sure want to add this in cart ', [
@@ -134,9 +39,8 @@ const index = () => {
                 onPress: () => {
 
                     itemDetail &&
-                        // dispatch({ type: 'ADD_TO_CART', payload: itemDetail })
-                        router.back()
-
+                        dispatch({ type: ACTIONS.ADD_TO_CART, payload: { ...itemDetail, quantity, fav } })
+                    router.back()
                 }
             },
             {
@@ -145,6 +49,7 @@ const index = () => {
         ])
     }
 
+    console.log(globalState.cart);
 
     return (
 
@@ -170,7 +75,14 @@ const index = () => {
 
             />
             <View className='w-full  flex-col  items-center'>
-                <Image resizeMode='contain' className=' rounded-2xl w-[250px] h-[250px]  m-4' source={itemDetail.img} />
+                {
+                    typeof (itemDetail.img) === 'string' ? (
+                        <Image resizeMode='contain' className=' rounded-2xl w-[250px] h-[250px]  m-4' source={{ uri: itemDetail.img }} />
+                    ) :
+                        (
+                            <Image resizeMode='contain' className=' rounded-2xl w-[250px] h-[250px]  m-4' source={itemDetail.img} />
+                        )
+                }
 
                 <View >
                     <Text className=' text-center  text-lg capitalize font-bold'>

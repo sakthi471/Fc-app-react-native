@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { Fontisto, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useRouter } from "expo-router"
+import ImageHandler from "./ImageHandler"
 
 
 const TopOrders = ({ topOrdersData }) => {
@@ -11,7 +12,9 @@ const TopOrders = ({ topOrdersData }) => {
     const TopOrders = topOrdersData.map(({ id, title, img, price, status }) => {
         return (
             <TouchableOpacity onPress={() => router.push(`/student/home/${id}`)} key={id} className=' w-[150px] h-[200px] flex justify-center flex-col items-center bg-white rounded-lg' >
-                <Image className=' rounded-md bg-contain w-[100px] h-[100px] ' resizeMode="contain" source={img} />
+                <View className=" w-[100px] h-[100px] ">
+                    <ImageHandler img={img} />
+                </View>
                 <Text className=' font-bold capitalize text-lg'>
                     {title}
                 </Text>

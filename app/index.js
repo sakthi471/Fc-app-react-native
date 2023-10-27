@@ -16,9 +16,9 @@ const Home = () => {
       <Stack.Screen
         options={{
           headerStyle: {
-            backgroundColor: 'white',
-
+            backgroundColor: '#F2F2F2'
           },
+          headerShadowVisible: false,
           title: 'FcApp',
           headerTitleAlign: "left",
 
