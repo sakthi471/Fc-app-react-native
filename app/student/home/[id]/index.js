@@ -49,7 +49,6 @@ const index = () => {
         ])
     }
 
-    console.log(globalState.cart);
 
     return (
 

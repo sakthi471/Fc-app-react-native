@@ -8,6 +8,17 @@
       "expo-router"
     ],
     "name": "fcApp",
-    "slug": "fcApp"
+    "slug": "fcApp",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "52d57a63-b821-4e20-8cc9-b17fee6d6492"
+      }
+    },
+    "android": {
+      "package": "com.sakthim.fcApp"
+    }
   }
 }
